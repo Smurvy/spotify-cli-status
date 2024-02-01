@@ -1,40 +1,45 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import pprint
+from User import User
+from fastapi import FastAPI
+
+app = FastAPI()
+
+scope = "user-read-playback-state"
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+
+
+user = User(sp)   
 
 
 
+@app.get("/")
+def read_root():
+    return {"hello": "world"}
+
+@app.get("/api/current_artist")
+def read_artist():
+    artist_name = user.get_cur_artist_name()
+    return {"artist_name":  artist_name if artist_name != None and user.is_playing() == True else None}
+
+@app.get("/api/current_album")
+def read_album():
+    album_name = user.get_cur_album_name()
+    user.update(sp)
+    return {"album_name":  album_name if album_name != None and user.is_playing() == True else None}
 
 
+@app.get("/api/current_song")
+def read_album():
+    song_name = user.get_cur_song_name()
+    user.update(sp)
+    return {"song_name":  song_name if song_name != None and user.is_playing() == True else None}
 
-def get_cur_artist_name(sp):
-    user = sp.current_user_playing_track()
-
-    return user["item"]["artists"][0]["name"]
-
-def get_cur_album_name(sp):
-    user = sp.current_user_playing_track()
-
-    return user["item"]["album"]["name"]
-
-
-
-# Formats the data to make it look nice
-def print_results(output, song_name, album_name, band_name):
-        print(f"""{output} 
-    {song_name}
-
-    On {album_name} 
-        
-    By {band_name}
-        """)
+@app.get("/api/current_album_cover_url")
+def read_album():
+    album_cover_url = user.get_cur_album_cover_url()
+    user.update(sp)
+    return {"album_cover_url":  album_cover_url if album_cover_url != None and user.is_playing() == True else None}
 
 
-
-def main():
-    scope = "user-read-playback-state"
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-
-    
-    print(get_cur_album_name(sp))
-main()
