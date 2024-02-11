@@ -31,15 +31,23 @@ def read_album():
 
 
 @app.get("/api/current_song")
-def read_album():
+def read_song():
     song_name = user.get_cur_song_name()
     user.update(sp)
     return {"song_name":  song_name if song_name != None and user.is_playing() == True else None}
 
 @app.get("/api/current_album_cover_url")
-def read_album():
+def read_album_cover_url():
     album_cover_url = user.get_cur_album_cover_url()
     user.update(sp)
     return {"album_cover_url":  album_cover_url if album_cover_url != None and user.is_playing() == True else None}
+
+@app.get("/api/is_playing")
+def read_is_playing():
+
+    user.update(sp)
+    return {"is_playing": user.is_playing()}
+
+
 
 

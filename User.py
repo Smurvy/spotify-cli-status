@@ -57,4 +57,9 @@ class User:
         self.data = sp.current_user_playing_track()
 
     def is_playing(self):
-        return self.data["is_playing"]
+
+        try:
+            return self.data["is_playing"]
+
+        except TypeError:
+            return False
