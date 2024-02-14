@@ -63,3 +63,13 @@ class User:
 
         except TypeError:
             return False
+
+    def discover_weekly(self,sp):
+        try:
+
+            # TODO: does this URL change every week IDK. Have a way for a user to update it...maybe pass it in the request?
+            data = sp.playlist("https://open.spotify.com/playlist/37i9dQZEVXcPT2N8xDTnKa?si=d6a5ddc3f46b48ea")
+
+            return data["tracks"]["items"][0]
+        except TypeError:
+            return None

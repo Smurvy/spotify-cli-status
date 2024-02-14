@@ -49,5 +49,9 @@ def read_is_playing():
     return {"is_playing": user.is_playing()}
 
 
+@app.get("/api/discover_weekly")
+def discover_weekly():
+    return {"data" : user.discover_weekly(sp)}
+
 
 
