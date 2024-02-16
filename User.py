@@ -63,13 +63,28 @@ class User:
 
         except TypeError:
             return False
-
-    def discover_weekly(self,sp):
+        
+    def __get_song_names(self,dict):
+       return [dict["tracks"]["items"][x]["track"]["name"] for x in range(len(dict))]
+    
+    def get_songs_on_playlist(self,sp,share_link):
         try:
 
             # TODO: does this URL change every week IDK. Have a way for a user to update it...maybe pass it in the request?
-            data = sp.playlist("https://open.spotify.com/playlist/37i9dQZEVXcPT2N8xDTnKa?si=d6a5ddc3f46b48ea")
+            data = sp.playlist(share_link)
 
-            return data["tracks"]["items"][0]
+            return self.__get_song_names(data)
+
+        except TypeError:
+            return None
+
+    def get_playlist(self,sp,share_link):
+        try:
+
+            # TODO: does this URL change every week IDK. Have a way for a user to update it...maybe pass it in the request?
+            data = sp.playlist(share_link)
+
+            return data
+
         except TypeError:
             return None
