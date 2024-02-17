@@ -1,6 +1,7 @@
 import climage
 import requests
 import os
+import pprint
 
 class User:
     def __init__(self,sp):  
@@ -64,15 +65,16 @@ class User:
         except TypeError:
             return False
         
-    def __get_song_names(self,dict):
-       return [dict["tracks"]["items"][x]["track"]["name"] for x in range(len(dict))]
+    def __get_song_names(self,playlist_contents):
+       
+       return [playlist_contents["items"][x]["track"]["name"] for x in range(len(playlist_contents["items"]))]
     
     def get_songs_on_playlist(self,sp,share_link):
         try:
 
-            # TODO: does this URL change every week IDK. Have a way for a user to update it...maybe pass it in the request?
-            data = sp.playlist(share_link)
-
+    
+            
+            data = sp.playlist_tracks(share_link)
             return self.__get_song_names(data)
 
         except TypeError:

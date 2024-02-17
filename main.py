@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 import pprint
 from User import User
 from fastapi import FastAPI
-from urllib.parse import unquote
+
 
 app = FastAPI()
 
@@ -50,10 +50,8 @@ def read_is_playing():
     return {"is_playing": user.is_playing()}
 
 
-@app.get("/api/get_playlist/{share_link}")
+@app.get("/api/get_playlist/songs/{share_link}")
 def discover_weekly(share_link: str):
     return {"data" : user.get_songs_on_playlist(sp,"https://open.spotify.com/playlist/" + share_link)}
-    #user.get_playlist(sp,share_link)
-
 
 
