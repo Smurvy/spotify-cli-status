@@ -1,0 +1,5 @@
+requests
+climage
+spotipy
+fastapi
+gunicorn

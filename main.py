@@ -1,6 +1,5 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import pprint
 from User import User
 from fastapi import FastAPI
 
